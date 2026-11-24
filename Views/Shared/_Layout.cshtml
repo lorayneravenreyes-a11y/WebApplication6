@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Instructor Information System</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark app-navbar">
+            <div class="container">
+                <a class="navbar-brand fw-bold" asp-controller="Account" asp-action="Dashboard">Instructor Information System</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation" aria-controls="mainNavigation" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNavigation">
+                    <div class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <a class="nav-link" asp-controller="Account" asp-action="Dashboard">Dashboard</a>
+                            <a class="nav-link" asp-controller="Instructor" asp-action="Index">Instructors</a>
+                            <span class="navbar-text small me-lg-2">Hi, @User.Identity.Name</span>
+                            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-outline-light btn-sm">Log out</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+                            <a class="btn btn-light btn-sm" asp-controller="Account" asp-action="Register">Create account</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container page-shell">
+        @RenderBody()
+    </main>
+
+    <footer class="app-footer">
+        <div class="container">&copy; @DateTime.Now.Year Instructor Information System</div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
